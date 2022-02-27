@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="hello_world">30 Day Vegan Challenge</string>
+    <string name="hello_world"> </string>
     <string name="start_challenge">Start Challenge</string>
+    <string name="textview">empty string</string>
 </resources>
