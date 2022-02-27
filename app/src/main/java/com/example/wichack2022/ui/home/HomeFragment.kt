@@ -52,7 +52,7 @@ private var _binding: FragmentHomeBinding? = null
   }
 
     private fun createResume(view: View){
-
+    // If the SharedPreferences variables start working then this'll be used to resume the session
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,13 +60,17 @@ private var _binding: FragmentHomeBinding? = null
         view.findViewById<Button>(R.id.button).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        val sharedPref = requireActivity().getSharedPreferences("com.example.wichack2022", Context.MODE_PRIVATE)
+
+        var dayCount = sharedPref.getInt("day", -1)+1
+        if(view.findViewById<Button>(R.id.button).text != "Check in" && dayCount != 0) {
+            view.findViewById<Button>(R.id.button).text = "Check in"
+            view.findViewById<TextView>(R.id.text_home2)?.text = dayCount.toString()
+        }
         // find the toast_button by its ID and set a click listener
         view.findViewById<Button>(R.id.button).setOnClickListener {
-            if(view.findViewById<Button>(R.id.button).text == "Check in"){
-                //val sharedPreferences = requireContext().let { PreferenceManager.getDefaultSharedPreferences(it) }
-                val sharedPref = requireActivity().getSharedPreferences("com.example.wichack2022", Context.MODE_PRIVATE)
-
-                val dayCount = sharedPref.getInt("day", -1)+1
+            if(view.findViewById<Button>(R.id.button).text == "Check in" || dayCount != 0){
+                dayCount = sharedPref.getInt("day", -1)+1
                 view.findViewById<TextView>(R.id.text_home2)?.text = dayCount.toString()
                 sharedPref.edit().putInt("day", dayCount).apply()
 
@@ -75,7 +79,6 @@ private var _binding: FragmentHomeBinding? = null
                 view.findViewById<Button>(R.id.button).text = "Check in"
                 // create a Toast with some text, to appear for a short time
                 val myToast = Toast.makeText(context, "Challenge Started!", Toast.LENGTH_SHORT)
-                val sharedPref = requireActivity().getSharedPreferences("com.example.wichack2022", Context.MODE_PRIVATE)
                 sharedPref.edit().putInt("day", 1).apply()
 
                 view.findViewById<TextView>(R.id.text_home2)?.text = "1"
